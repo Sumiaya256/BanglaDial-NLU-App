@@ -1,0 +1,112 @@
+@import "tailwindcss";
+
+/* Dark mode is switched by the "dark" class on <html> (see ThemeToggle) */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ------------------------------------------------------------------
+   Design tokens. Light is the default, .dark overrides the same names.
+------------------------------------------------------------------ */
+:root {
+  --bg: #f8fafc;
+  --bg-2: #f1f5f9;
+  --card: #ffffff;
+  --ink: #1e293b;
+  --ink-2: #64748b;
+  --muted: #94a3b8;
+  --accent: #4569a8;
+  --accent-2: #6b8fcb;
+  --on-accent: #ffffff;
+  --soft: #eff6ff;
+  --line: #e2e8f0;
+  --shadow-card: 0 1px 2px rgb(15 23 42 / 0.04), 0 4px 14px rgb(15 23 42 / 0.04);
+  --shadow-button: 0 1px 2px rgb(69 105 168 / 0.25), 0 3px 8px rgb(69 105 168 / 0.18);
+}
+
+.dark {
+  --bg: #0f172a;
+  --bg-2: #111c30;
+  --card: #182438;
+  --ink: #f1f5f9;
+  --ink-2: #94a3b8;
+  --muted: #64748b;
+  --accent: #8badeb;
+  --accent-2: #6b8fcb;
+  --on-accent: #0f172a;
+  --soft: #1b2a45;
+  --line: #29384e;
+  --shadow-card: none;
+  --shadow-button: none;
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-bg-2: var(--bg-2);
+  --color-card: var(--card);
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-muted: var(--muted);
+  --color-accent: var(--accent);
+  --color-accent-2: var(--accent-2);
+  --color-on-accent: var(--on-accent);
+  --color-soft: var(--soft);
+  --color-line: var(--line);
+
+  --shadow-card: var(--shadow-card);
+  --shadow-button: var(--shadow-button);
+
+  /* Radius system: 8 / 10 / 14 / 18 */
+  --radius-chip: 8px;
+  --radius-field: 10px;
+  --radius-card: 14px;
+  --radius-panel: 18px;
+
+  --font-sans: var(--font-inter), var(--font-bengali), system-ui, sans-serif;
+  --font-mono: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Visible keyboard focus everywhere */
+@utility focus-ring {
+  &:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+}
+
+/* Smooth colour change when the theme button is pressed.
+   The class is added for a short moment by ThemeToggle. */
+html.theme-switching,
+html.theme-switching *,
+html.theme-switching *::before,
+html.theme-switching *::after {
+  transition:
+    background-color 0.25s ease,
+    border-color 0.25s ease,
+    color 0.25s ease,
+    box-shadow 0.25s ease !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  html.theme-switching,
+  html.theme-switching * {
+    transition: none !important;
+  }
+}
+
+::selection {
+  background: color-mix(in srgb, var(--accent) 25%, transparent);
+}
